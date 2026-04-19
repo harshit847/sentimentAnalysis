@@ -22,3 +22,8 @@ venv/
 *.egg-info/
 dist/
 build/
+
+# Environment files
+.env
+.env.*
+!.env.example
