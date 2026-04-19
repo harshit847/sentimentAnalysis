@@ -2,6 +2,11 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
+# ✅ ADD THIS (IMPORTANT FIX)
+RUN apt-get update && apt-get install -y \
+    libgl1 \
+    libglib2.0-0
+
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
