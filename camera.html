@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Camera Emotion Detection</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #0e0e0e;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+        }
+
+        h2 {
+            color: #00ffea;
+            text-shadow: 0 0 10px #00ffea, 0 0 20px #00ffea;
+            margin-bottom: 20px;
+        }
+
+        video {
+            border-radius: 15px;
+            border: 2px solid #00ffea;
+            box-shadow: 0 0 20px #00ffea, 0 0 40px #00ffea;
+            max-width: 100%;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(90deg, #00ffea, #007fff);
+            color: #0e0e0e;
+            cursor: pointer;
+            box-shadow: 0 0 15px #00ffea, 0 0 30px #007fff;
+            transition: all 0.3s ease-in-out;
+        }
+
+        button:hover {
+            box-shadow: 0 0 30px #00ffea, 0 0 60px #007fff;
+            transform: scale(1.05);
+        }
+
+        #result {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            background: linear-gradient(145deg, rgba(0, 255, 234, 0.2), rgba(0, 127, 255, 0.2));
+            border: 1px solid #00ffea;
+            box-shadow: 0 0 20px #00ffea, 0 0 40px #007fff;
+            width: 400px;
+            max-width: 90%;
+            text-align: center;
+            word-break: break-word;
+            color: #00ffea;
+            font-size: 18px;
+        }
+
+        canvas {
+            display: none;
+        }
+
+        @media (max-width: 450px) {
+            video, #result {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Live Camera</h2>
+
+    <video id="video" autoplay></video>
+
+    <button onclick="captureAndDetect()">Capture & Detect Emotion</button>
+
+    <canvas id="canvas"></canvas>
+
+    <h3 id="result"></h3>
+
+    <script>
+        const video = document.getElementById("video");
+        const canvas = document.getElementById("canvas");
+        const resultDiv = document.getElementById("result");
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => video.srcObject = stream)
+            .catch(err => alert("Camera access denied"));
+
+        async function captureAndDetect() {
+            const ctx = canvas.getContext("2d");
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0);
+
+            const blob = await new Promise(resolve =>
+                canvas.toBlob(resolve, "image/jpeg")
+            );
+
+            const formData = new FormData();
+            formData.append("file", blob, "photo.jpg");
+
+            const response = await fetch("http://127.0.0.1:8000/analyze-face", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.error) {
+                resultDiv.innerHTML = "❌ Error: " + data.error;
+            } else {
+                resultDiv.innerHTML = `
+                    ✅ Emotion: <b>${data.emotion}</b><br>
+                    🔢 Confidence: <b>${data.confidence}</b><br>
+                    🔢 All Scores: <pre>${JSON.stringify(data.emotions, null, 2)}</pre>
+                `;
+            }
+        }
+    </script>
+</body>
+
+</html>
