@@ -22,6 +22,13 @@ def _env_int(key: str, default: int) -> int:
         return default
 
 
+def _env_bool(key: str, default: bool) -> bool:
+    v = os.getenv(key)
+    if v is None or v.strip() == "":
+        return default
+    return v.lower() in ("true", "1", "t", "y", "yes")
+
+
 @dataclass(frozen=True)
 class Settings:
     MONGO_URI: str
@@ -34,6 +41,7 @@ class Settings:
     OPENAI_API_KEY: str
     OPENAI_MODEL: str
     CORS_ORIGINS: str
+    USE_MTCNN: bool
 
 
 @lru_cache
@@ -52,6 +60,7 @@ def get_settings() -> Settings:
             "CORS_ORIGINS",
             "http://localhost:3000,http://127.0.0.1:3000",
         ),
+        USE_MTCNN=_env_bool("USE_MTCNN", False),
     )
 
 

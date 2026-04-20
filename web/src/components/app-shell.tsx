@@ -18,7 +18,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const { user, logout } = useAuth();
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex h-screen overflow-hidden">
       <aside className="hidden w-64 flex-shrink-0 border-r border-slate-800 bg-slate-900/50 md:flex md:flex-col">
         <div className="border-b border-slate-800 px-5 py-6">
           <Link href="/dashboard" className="text-lg font-semibold tracking-tight text-white">
@@ -55,7 +55,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
 
-      <div className="flex min-h-screen flex-1 flex-col">
+      <div className="flex flex-1 flex-col">
         <header className="border-b border-slate-800 bg-slate-950/80 backdrop-blur md:hidden">
           <div className="flex items-center justify-between px-4 py-3">
             <Link href="/dashboard" className="font-semibold text-white">
@@ -87,7 +87,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             {nav.find((n) => n.href === pathname)?.label ?? "App"}
           </h1>
         </header>
-        <main className="flex-1 px-4 py-6 md:px-8">{children}</main>
+        <main className="flex-1 overflow-y-auto px-4 py-6 md:px-8">{children}</main>
       </div>
     </div>
   );
