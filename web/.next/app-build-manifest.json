@@ -21,25 +21,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(app)/layout.js"
     ],
+    "/login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/login/page.js"
+    ],
+    "/register/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/register/page.js"
+    ],
     "/(app)/analyze/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(app)/analyze/page.js"
-    ],
-    "/(app)/history/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(app)/history/page.js"
-    ],
-    "/(app)/analytics/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(app)/analytics/page.js"
-    ],
-    "/(app)/profile/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(app)/profile/page.js"
     ]
   }
 }

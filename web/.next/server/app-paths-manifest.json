@@ -1,7 +1,6 @@
 {
-  "/(app)/analyze/page": "app/(app)/analyze/page.js",
+  "/login/page": "app/login/page.js",
+  "/register/page": "app/register/page.js",
   "/(app)/dashboard/page": "app/(app)/dashboard/page.js",
-  "/(app)/profile/page": "app/(app)/profile/page.js",
-  "/(app)/history/page": "app/(app)/history/page.js",
-  "/(app)/analytics/page": "app/(app)/analytics/page.js"
+  "/(app)/analyze/page": "app/(app)/analyze/page.js"
 }

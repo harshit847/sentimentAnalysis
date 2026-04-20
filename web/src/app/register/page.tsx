@@ -89,6 +89,11 @@ export default function RegisterPage() {
           >
             {pending ? "Creating…" : "Sign up"}
           </button>
+          {pending && (
+            <p className="mt-4 text-center text-xs text-slate-400 animate-pulse">
+              Creating your account… this may take a few seconds.
+            </p>
+          )}
         </form>
         <p className="mt-6 text-center text-sm text-slate-500">
           Already have an account?{" "}
